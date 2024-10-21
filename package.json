@@ -10,6 +10,7 @@
     "url": "git+https://github.com/kudashevs/remove-code-blocks.git"
   },
   "homepage": "https://github.com/kudashevs/remove-code-blocks",
+  "bugs": "https://github.com/kudashevs/remove-code-blocks/issues",
   "keywords": [
     "blocks",
     "strip code",
@@ -33,5 +34,18 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --colors",
     "format": "prettier --write \"**/*.+(js|json)\" --"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "automock": false,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ]
   }
 }
