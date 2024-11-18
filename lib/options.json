@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "skips": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "errorMessage": {
+          "type": "skips.${0#} should be a string",
+          "minLength": "skips.${0#} should be a non empty string"
+        }
+      },
+      "errorMessage": {
+        "type": "skips option must be an array"
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "type": ["string", "object"],
+            "errorMessage": "blocks.${0#} should be a string or a valid object"
+          },
+          {
+            "if": {
+              "type": "string"
+            },
+            "then": {
+              "type": "string",
+              "minLength": 1,
+              "errorMessage": {
+                "type": "blocks.${0#} should be a string",
+                "minLength": "blocks.${0#} should be a non empty string"
+              }
+            }
+          },
+          {
+            "if": {
+              "type": "object"
+            },
+            "then": {
+              "type": "object",
+              "required": ["name", "prefix", "suffix"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": {
+                    "type": "name should be a string",
+                    "minLength": "name should be a non empty string"
+                  }
+                },
+                "prefix": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": {
+                    "type": "prefix should be a string",
+                    "minLength": "prefix should be a non empty string"
+                  }
+                },
+                "suffix": {
+                  "type": "string",
+                  "minLength": 0,
+                  "errorMessage": {
+                    "type": "suffix should be a string"
+                  }
+                }
+              },
+              "errorMessage": {
+                "type": "blocks.${0#} should be an object",
+                "required": "blocks.${0#} should be an object (with name, prefix, suffix)"
+              }
+            }
+          }
+        ]
+      },
+      "errorMessage": {
+        "type": "blocks option must be an array"
+      }
+    }
+  },
+  "errorMessage": {
+    "type": "must be an object"
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,5 @@
+{
+  "orders": {
+    "blocks": ["name", "prefix", "suffix"]
+  }
+}
