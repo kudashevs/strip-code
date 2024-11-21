@@ -42,14 +42,22 @@
             },
             "then": {
               "type": "object",
-              "required": ["name", "prefix", "suffix"],
+              "required": ["start", "end", "prefix", "suffix"],
               "properties": {
-                "name": {
+                "start": {
+                  "type": "string",
+                  "minLength":  1,
+                  "errorMessage":  {
+                    "type": "start should be a string",
+                    "minLength": "start should be a non empty string"
+                  }
+                },
+                "end": {
                   "type": "string",
                   "minLength": 1,
                   "errorMessage": {
-                    "type": "name should be a string",
-                    "minLength": "name should be a non empty string"
+                    "type": "end should be a string",
+                    "minLength": "end should be a non empty string"
                   }
                 },
                 "prefix": {
@@ -70,7 +78,7 @@
               },
               "errorMessage": {
                 "type": "blocks.${0#} should be an object",
-                "required": "blocks.${0#} should be an object (with name, prefix, suffix)"
+                "required": "blocks.${0#} should be an object (with start, end, prefix, suffix)"
               }
             }
           }

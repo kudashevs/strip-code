@@ -4,11 +4,11 @@ import schema from '../../lib/options.json';
 
 describe('default test suite', () => {
   const originalMode = process.env.NODE_ENV;
-  const defaultOptions = {blocks: ['devblock']};
+  const defaultOptions = {blocks: ['dev']};
 
   it.each([
-    ['production', '/* devblock:start */ any /* devblock:end */', ''],
-    ['test', '/* devblock:start */ any /* devblock:end */', ''],
+    ['production', '/* dev-start */ any /* dev-end */', ''],
+    ['test', '/* dev-start */ any /* dev-end */', ''],
   ])('proceeds in %s environment', (environment, input, expected) => {
     process.env.NODE_ENV = environment;
 
@@ -21,8 +21,8 @@ describe('default test suite', () => {
   it('skips in development environment by default', () => {
     process.env.NODE_ENV = 'development';
 
-    const input = '/* devblock:start */ visible /* devblock:end */';
-    const expected = '/* devblock:start */ visible /* devblock:end */';
+    const input = '/* dev-start */ visible /* dev-end */';
+    const expected = '/* dev-start */ visible /* dev-end */';
 
     expect(process.env.NODE_ENV).toStrictEqual('development');
     expect(sut(input, defaultOptions)).toStrictEqual(expected);
@@ -33,8 +33,8 @@ describe('default test suite', () => {
   it('can skip in test environment when an option provided', () => {
     process.env.NODE_ENV = 'test';
 
-    const input = '/* devblock:start */ visible /* devblock:end */';
-    const expected = '/* devblock:start */ visible /* devblock:end */';
+    const input = '/* dev-start */ visible /* dev-end */';
+    const expected = '/* dev-start */ visible /* dev-end */';
 
     expect(process.env.NODE_ENV).toStrictEqual('test');
     expect(sut(input, {skips: ['test']})).toStrictEqual(expected);
@@ -43,8 +43,8 @@ describe('default test suite', () => {
   });
 
   it('can handle an empty skips option', () => {
-    const input = 'visible /* devblock:start */ will be removed /* devblock:end */';
-    const expected = 'visible /* devblock:start */ will be removed /* devblock:end */';
+    const input = 'visible /* dev-start */ will be removed /* dev-end */';
+    const expected = 'visible /* dev-start */ will be removed /* dev-end */';
 
     expect(sut(input, {skips: []})).toStrictEqual(expected);
   });
@@ -62,8 +62,8 @@ describe('default test suite', () => {
   });
 
   it('can handle an empty blocks option', () => {
-    const input = 'visible /* devblock:start */ will be removed /* devblock:end */';
-    const expected = 'visible /* devblock:start */ will be removed /* devblock:end */';
+    const input = 'visible /* dev-start */ will be removed /* dev-end */';
+    const expected = 'visible /* dev-start */ will be removed /* dev-end */';
 
     expect(sut(input, {blocks: []})).toStrictEqual(expected);
   });
@@ -82,7 +82,7 @@ describe('default test suite', () => {
 
   it('can remove a block generated from a string parameter', () => {
     const options = {blocks: ['debug']};
-    const input = 'visible /* debug:start */ will be removed /* debug:end */';
+    const input = 'visible /* debug-start */ will be removed /* debug-end */';
     const expected = 'visible ';
 
     const output = sut(input, options);
@@ -94,13 +94,14 @@ describe('default test suite', () => {
     const options = {
       blocks: [
         {
-          name: 'debug',
+          start: 'debug_start',
+          end: 'debug_end',
           prefix: '/*',
           suffix: '*/',
         },
       ],
     };
-    const input = 'visible /* debug:start */ will be removed /* debug:end */';
+    const input = 'visible /* debug_start */ will be removed /* debug_end */';
     const expected = 'visible ';
 
     const output = sut(input, options);
@@ -109,14 +110,15 @@ describe('default test suite', () => {
   });
 
   it.each([
-    ['no spaces', 'visible <!--debug:start--> will be removed <!--debug:end-->', 'visible '],
-    ['spaces', 'visible <!-- debug:start --> will be removed <!-- debug:end -->', 'visible '],
-    ['tabulations', 'visible <!--\tdebug:start\t--> will be removed <!--\tdebug:end\t-->', 'visible '],
+    ['no spaces', 'visible <!--debug_start--> will be removed <!--debug_end-->', 'visible '],
+    ['spaces', 'visible <!-- debug_start --> will be removed <!-- debug_end -->', 'visible '],
+    ['tabulations', 'visible <!--\tdebug_start\t--> will be removed <!--\tdebug_end\t-->', 'visible '],
   ])('can use %s between start/end and a label', (_, input, expected) => {
     const options = {
       blocks: [
         {
-          name: 'debug',
+          start: 'debug_start',
+          end: 'debug_end',
           prefix: '<!--',
           suffix: '-->',
         },
@@ -132,13 +134,14 @@ describe('default test suite', () => {
     const options = {
       blocks: [
         {
-          name: 'debug',
+          start: 'debug_start',
+          end: 'debug_end',
           prefix: '<!--',
           suffix: '-->',
         },
       ],
     };
-    const input = 'visible <!--   debug:start   --> will be removed <!--\t \tdebug:end\t \t-->';
+    const input = 'visible <!--   debug_start   --> will be removed <!--\t \tdebug_end\t \t-->';
     const expected = 'visible ';
 
     const output = sut(input, options);
@@ -146,17 +149,30 @@ describe('default test suite', () => {
     expect(output).toStrictEqual(expected);
   });
 
-  it('can use special characters in names', () => {
+  it('can use special characters in names from a string', () => {
+    const options = {
+      blocks: ['*devblock!'],
+    };
+    const input = 'visible /* *devblock!-start */ will be removed /* *devblock!-end */';
+    const expected = 'visible ';
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
+
+  it('can use special characters in names from an object', () => {
     const options = {
       blocks: [
         {
-          name: '*devblock!',
+          start: '*devblock#start!',
+          end: '*devblock#end!',
           prefix: '<!--',
           suffix: '-->',
         },
       ],
     };
-    const input = 'visible <!-- *devblock!:start --> will be removed <!-- *devblock!:end -->';
+    const input = 'visible <!-- *devblock#start! --> will be removed <!-- *devblock#end! -->';
     const expected = 'visible ';
 
     const output = sut(input, options);
@@ -165,7 +181,7 @@ describe('default test suite', () => {
   });
 
   it('can remove a block marked in lower case', () => {
-    const input = 'visible /* devblock:start */ will be removed /* devblock:end */';
+    const input = 'visible /* dev-start */ will be removed /* dev-end */';
     const expected = 'visible ';
 
     const output = sut(input, defaultOptions);
@@ -174,8 +190,8 @@ describe('default test suite', () => {
   });
 
   it('cannot remove a block marked in upper case with default options', () => {
-    const input = "visible /* DEVBLOCK:START */ won't be removed /* DEVBLOCK:END */";
-    const expected = "visible /* DEVBLOCK:START */ won't be removed /* DEVBLOCK:END */";
+    const input = "visible /* DEVBLOCK-START */ won't be removed /* DEVBLOCK-END */";
+    const expected = "visible /* DEVBLOCK-START */ won't be removed /* DEVBLOCK-END */";
 
     const output = sut(input, defaultOptions);
 
@@ -186,13 +202,14 @@ describe('default test suite', () => {
     const options = {
       blocks: [
         {
-          name: 'DEVBLOCK',
+          start: 'DEVBLOCK-START',
+          end: 'DEVBLOCK-END',
           prefix: '/*',
           suffix: '*/',
         },
       ],
     };
-    const input = 'visible /* DEVBLOCK:start */ will be removed /* DEVBLOCK:end */';
+    const input = 'visible /* DEVBLOCK-START */ will be removed /* DEVBLOCK-END */';
     const expected = 'visible ';
 
     const output = sut(input, options);

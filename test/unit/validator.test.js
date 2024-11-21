@@ -56,20 +56,34 @@ describe('options validator test suite', () => {
   it.each([
     ['first value is not a string neither an object', {blocks: [42]}, 'blocks.0 should be a string or a valid object'],
     ['first value is an empty string', {blocks: ['']}, 'blocks.0 should be a non empty string'],
-    ['first value is an empty object', {blocks: [{}]}, 'blocks.0 should be an object (with name, prefix, suffix)'],
+    ['first value is an empty object', {blocks: [{}]}, 'blocks.0 should be an object (with start, end, prefix, suffix)'],
     [
-      'first value is an object without name',
+      'first value is an object without start',
       {
         blocks: [{prefix: 'any', suffix: 'any'}],
       },
       /^blocks.0 should be an object/,
     ],
     [
-      'first value is an object with empty name',
+      'first value is an object without end',
       {
-        blocks: [{name: '', prefix: 'any', suffix: 'any'}],
+        blocks: [{start: 'any', prefix: 'any', suffix: 'any'}],
       },
-      'name should be a non empty string',
+      /^blocks.0 should be an object/,
+    ],
+    [
+      'first value is an object with empty start',
+      {
+        blocks: [{start: '', end: 'any', prefix: 'any', suffix: 'any'}],
+      },
+      'start should be a non empty string',
+    ],
+    [
+      'first value is an object with empty end',
+      {
+        blocks: [{start: 'any', end: '', prefix: 'any', suffix: 'any'}],
+      },
+      'end should be a non empty string',
     ],
     [
       'first value is an object with empty prefix',
@@ -90,13 +104,13 @@ describe('options validator test suite', () => {
       {
         blocks: [{name: 'any', prefix: 'any', suffix: 'any'}, {}],
       },
-      'blocks.1 should be an object (with name, prefix, suffix)',
+      'blocks.1 should be an object (with start, end, prefix, suffix)',
     ],
     [
-      'second value is an object without name',
+      'second value is an object without start and end',
       {
         blocks: [
-          {name: 'any', prefix: 'any', suffix: 'any'},
+          {start: 'any', end: "any", prefix: 'any', suffix: 'any'},
           {prefix: 'any', suffix: 'any'},
         ],
       },
@@ -111,46 +125,46 @@ describe('options validator test suite', () => {
     expect.assertions(1);
   });
 
-  it('fails with a combined error when in options.blocks the first value is an object without suffix and empty name and prefix', () => {
+  it('fails with a combined error when in options.blocks the first value is an object without suffix and empty start and prefix', () => {
     const options = {
-      blocks: [{name: '', prefix: '', any: 'any'}],
+      blocks: [{start: '', end: 'any', prefix: '', any: 'any'}],
     };
 
     try {
       sut(schema, options);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be an object \(with name, prefix, suffix\) and name.+and.+prefix/);
+      expect(e.message).toMatch(/^blocks.0 should be an object \(with start, end, prefix, suffix\) and prefix.+and.+start/);
     }
     expect.assertions(1);
   });
 
   it('fails with a combined error when in options.blocks the first value is an object that breaks all of the rules', () => {
     const options = {
-      blocks: [{name: '', prefix: '', suffix: 42}],
+      blocks: [{start: '', end: '', prefix: '', suffix: 42}],
     };
-    const configuration = {name: 'RemoveBlocks', order: {blocks: ['name', 'prefix', 'suffix']}};
+    const config = {name: 'RemoveBlocks', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
 
     try {
-      sut(schema, options, configuration);
+      sut(schema, options, config);
     } catch (e) {
-      expect(e.message).toMatch(/name should be a non empty string and prefix.+and.+suffix/);
+      expect(e.message).toMatch(/start should be a non empty string and end.+and.+prefix/);
     }
     expect.assertions(1);
   });
 
-  it('fails with a combined error when in options.blocks the first and second values are an object without suffix and empty name and prefix', () => {
+  it('fails with a combined error when in options.blocks the first and second values are objects without suffix and empty start and prefix', () => {
     const options = {
       blocks: [
-        {name: '', prefix: '', any: 'any'},
-        {name: '', prefix: '', any: 'any'},
+        {start: '', end: 'any', prefix: '', any: 'any'},
+        {start: '', end: 'any', prefix: '', any: 'any'},
       ],
     };
-    const configuration = {name: 'RemoveBlocks', order: {blocks: ['name', 'prefix', 'suffix']}};
+    const config = {name: 'RemoveBlocks', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
 
     try {
-      sut(schema, options, configuration);
+      sut(schema, options, config);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be an object \(with name, prefix, suffix\) and name.+and.+prefix/);
+      expect(e.message).toMatch(/^blocks.0 should be an object \(with start, end, prefix, suffix\) and start.+and.+prefix.+and.+blocks.1/);
     }
     expect.assertions(1);
   });
