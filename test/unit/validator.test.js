@@ -56,7 +56,31 @@ describe('options validator test suite', () => {
   it.each([
     ['first value is not a string neither an object', {blocks: [42]}, 'blocks.0 should be a string or a valid object'],
     ['first value is an empty string', {blocks: ['']}, 'blocks.0 should be a non empty string'],
-    ['first value is an empty object', {blocks: [{}]}, 'blocks.0 should be an object (with start, end, prefix, suffix)'],
+    ['first value is an empty object', {blocks: [{}]}, 'blocks.0 should be a valid object with start, end, prefix, suffix'],
+    [
+      'second value is an empty string',
+      {
+        blocks: [{start: 'any', end: 'any', prefix: 'any', suffix: 'any'}, ''],
+      },
+      'blocks.1 should be a non empty string',
+    ],
+    [
+      'second value is an empty object',
+      {
+        blocks: [{start: 'any', end: 'any', prefix: 'any', suffix: 'any'}, {}],
+      },
+      'blocks.1 should be a valid object with start, end, prefix, suffix',
+    ],
+  ])('fails when in options.blocks the %s', (_, options, expected) => {
+    try {
+      sut(schema, options);
+    } catch (e) {
+      expect(e.message).toMatch(expected);
+    }
+    expect.assertions(1);
+  });
+
+  it.each([
     [
       'first value is an object without start',
       {
@@ -91,20 +115,6 @@ describe('options validator test suite', () => {
         blocks: [{name: 'any', prefix: '', suffix: 'any'}],
       },
       'prefix should be a non empty string',
-    ],
-    [
-      'second value is an empty string',
-      {
-        blocks: [{name: 'any', prefix: 'any', suffix: 'any'}, ''],
-      },
-      'blocks.1 should be a non empty string',
-    ],
-    [
-      'second value is an empty object',
-      {
-        blocks: [{name: 'any', prefix: 'any', suffix: 'any'}, {}],
-      },
-      'blocks.1 should be an object (with start, end, prefix, suffix)',
     ],
     [
       'second value is an object without start and end',
