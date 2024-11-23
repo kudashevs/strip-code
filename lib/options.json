@@ -42,7 +42,7 @@
             },
             "then": {
               "type": "object",
-              "required": ["start", "end", "prefix", "suffix"],
+              "required": ["start", "end"],
               "properties": {
                 "start": {
                   "type": "string",
