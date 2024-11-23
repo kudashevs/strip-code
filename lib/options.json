@@ -46,8 +46,8 @@
               "properties": {
                 "start": {
                   "type": "string",
-                  "minLength":  1,
-                  "errorMessage":  {
+                  "minLength": 1,
+                  "errorMessage": {
                     "type": "start should be a string",
                     "minLength": "start should be a non empty string"
                   }
