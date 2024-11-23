@@ -48,37 +48,37 @@
                   "type": "string",
                   "minLength": 1,
                   "errorMessage": {
-                    "type": "start should be a string",
-                    "minLength": "start should be a non empty string"
+                    "type": "blocks.${1#}.start should be a string",
+                    "minLength": "blocks.${1#}.start should be a non empty string"
                   }
                 },
                 "end": {
                   "type": "string",
                   "minLength": 1,
                   "errorMessage": {
-                    "type": "end should be a string",
-                    "minLength": "end should be a non empty string"
+                    "type": "blocks.${1#}.end should be a string",
+                    "minLength": "blocks.${1#}.end should be a non empty string"
                   }
                 },
                 "prefix": {
                   "type": "string",
                   "minLength": 1,
                   "errorMessage": {
-                    "type": "prefix should be a string",
-                    "minLength": "prefix should be a non empty string"
+                    "type": "blocks.${1#}.prefix should be a string",
+                    "minLength": "blocks.${1#}.prefix should be a non empty string"
                   }
                 },
                 "suffix": {
                   "type": "string",
                   "minLength": 0,
                   "errorMessage": {
-                    "type": "suffix should be a string"
+                    "type": "blocks.${1#}.suffix should be a string"
                   }
                 }
               },
               "errorMessage": {
                 "type": "blocks.${0#} should be an object",
-                "required": "blocks.${0#} should be an object (with start, end, prefix, suffix)"
+                "required": "blocks.${0#} should be a valid object with start, end, prefix, suffix"
               }
             }
           }
