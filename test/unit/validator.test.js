@@ -56,7 +56,7 @@ describe('options validator test suite', () => {
   it.each([
     ['first element is not a string neither an object', {blocks: [42]}, 'blocks.0 should be a string or a valid'],
     ['first element is an empty string', {blocks: ['']}, 'blocks.0 should be a non empty string'],
-    ['first element is an empty object', {blocks: [{}]}, 'blocks.0 should be a valid object with start, end, prefix, suffix'],
+    ['first element is an empty object', {blocks: [{}]}, 'blocks.0 should be a valid object with start, end'],
     [
       'second element is an empty string',
       {
@@ -69,7 +69,7 @@ describe('options validator test suite', () => {
       {
         blocks: [{start: 'any', end: 'any', prefix: 'any', suffix: 'any'}, {}],
       },
-      'blocks.1 should be a valid object with start, end, prefix, suffix',
+      'blocks.1 should be a valid object with start, end',
     ],
   ])('fails when in options.blocks the %s', (_, options, expected) => {
     try {
@@ -198,7 +198,7 @@ describe('options validator test suite', () => {
     try {
       sut(schema, options);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end, prefix, suffix and blocks.0.prefix.+and.+start/);
+      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end and blocks.0.prefix.+and.+start/);
     }
     expect.assertions(1);
   });
@@ -229,7 +229,7 @@ describe('options validator test suite', () => {
     try {
       sut(schema, options, config);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end, prefix, suffix and blocks.0.start.+and.+prefix.+and.+blocks.1/);
+      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end and blocks.0.start.+and.+prefix.+and.+blocks.1/);
     }
     expect.assertions(1);
   });
