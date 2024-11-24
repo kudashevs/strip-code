@@ -40,38 +40,38 @@ describe('specification test', () => {
   });
 
   it('should remove a multi-line block marked with the provided options', () => {
-    const options = {blocks: [{start: 'dev:start', end: 'dev:end', prefix: '<!--', suffix: '-->'}]};
+    const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->'}]};
     const input = `test
-    <!-- dev:start -->
+    <!-- dev-start -->
     console.log('log an operation');
-    <!-- dev:end -->`;
+    <!-- dev-end -->`;
     const expected = 'test\n';
 
     expect(sut(input, options)).toStrictEqual(expected);
   });
 
   it('should remove a single-line block marked with the provided options', () => {
-    const options = {blocks: [{start: 'dev:start', end: 'dev:end', prefix: '//', suffix: ''}]};
+    const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '//', suffix: ''}]};
     const input = `test
-    // dev:start
+    // dev-start
     console.log('log an operation');
-    // dev:end`;
+    // dev-end`;
     const expected = 'test\n';
 
     expect(sut(input, options)).toStrictEqual(expected);
   });
 
   it('should remove an inlined multi-line block with the provided options', () => {
-    const options = {blocks: [{start: 'dev:start', end: 'dev:end', prefix: '<!--', suffix: '-->'}]};
-    const input = `test<!-- dev:start -->console.log('log an operation')<!-- dev:end -->`;
+    const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->'}]};
+    const input = `test<!-- dev-start -->console.log('log an operation')<!-- dev-end -->`;
     const expected = 'test';
 
     expect(sut(input, options)).toStrictEqual(expected);
   });
 
   it('should remove repeated blocks with the provided options', () => {
-    const options = {blocks: [{start: 'dev:start', end: 'dev:end', prefix: '<!--', suffix: '-->'}]};
-    const input = `<!-- dev:start -->console.log('log an operation')<!-- dev:end -->test<!-- dev:start -->console.log('log an operation')<!-- dev:end -->`;
+    const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->'}]};
+    const input = `<!-- dev-start -->console.log('log an operation')<!-- dev-end -->test<!-- dev-start -->console.log('log an operation')<!-- dev-end -->`;
     const expected = 'test';
 
     expect(sut(input, options)).toStrictEqual(expected);
