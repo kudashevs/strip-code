@@ -41,6 +41,7 @@
   "scripts": {
     "test": "vitest run",
     "test:unit": "npm run test ./test/unit/",
+    "test:spec": "npm run test ./test/acceptance/",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint --cache .",
     "format": "prettier --write \"**/*.+(js|json)\" --"
