@@ -1,20 +1,23 @@
 {
-  "name": "remove-code-blocks",
+  "name": "strip-code",
   "version": "1.0.0",
-  "description": "A library that removes marked blocks of code from any type of code.",
+  "description": "A library that strips marked blocks of code from any type of code.",
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kudashevs/remove-code-blocks.git"
+    "url": "git+https://github.com/kudashevs/strip-code.git"
   },
-  "homepage": "https://github.com/kudashevs/remove-code-blocks",
-  "bugs": "https://github.com/kudashevs/remove-code-blocks/issues",
+  "homepage": "https://github.com/kudashevs/strip-code",
+  "bugs": "https://github.com/kudashevs/strip-code/issues",
   "keywords": [
-    "blocks",
+    "strip",
     "strip code",
+    "strip blocks",
+    "strip code blocks",
     "remove code",
+    "remove blocks",
     "remove code blocks"
   ],
   "authors": [
@@ -36,20 +39,10 @@
     "vitest": "^2.1.5"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --colors",
+    "test": "vitest run",
+    "test:unit": "npm run test ./test/unit/",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint --cache .",
     "format": "prettier --write \"**/*.+(js|json)\" --"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/test"
-    ],
-    "automock": false,
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "html"
-    ]
   }
 }
