@@ -35,13 +35,13 @@ console.log('debug');
 `options.blocks` an array of blocks' representations. Each element of this array describes a unique pair of tags with
 start, end, prefix, and suffix. These values are represented by an object with the properties or by a string:
 ```
-start: 'dev-start'             # a string defines a name of the start tag (unique)
-end: 'dev-end',                # a string defines a name of the end tag (unique)
-prefix: '/*',                  # a string defines the beginning of a tag (non-empty string)
-suffix: '*/',                  # a string defines the end of a tag (can be an empty string)
+start: 'dev-start'             # a string defines a name of the start tag (unique) - mandatory
+end: 'dev-end',                # a string defines a name of the end tag (unique) - mandatory
+prefix: '/*',                  # a string defines the beginning of a tag (non-empty string) - optional
+suffix: '*/',                  # a string defines the end of a tag (can be an empty string) - optional
 ```
-When a pair of tags is represented by a string, the default name of the start tag is `string-start`, the default name of
-the end of tag is `string-end`. The default prefix and suffix are `/*` and `*/`, respectively.
+When a pair of tags is represented by a string, this string will be used to generate the names of the start and end tags
+(e.g. `string-start` and `string-end`). If prefix and suffix are not provided, the default values `/*` and `*/` will be used.
 
 
 ## License
