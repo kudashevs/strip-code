@@ -207,7 +207,7 @@ describe('options validator test suite', () => {
     const options = {
       blocks: [{start: '', end: '', prefix: '', suffix: 42}],
     };
-    const config = {name: 'RemoveBlocks', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
+    const config = {name: 'StripCode', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
 
     try {
       sut(schema, options, config);
@@ -224,7 +224,7 @@ describe('options validator test suite', () => {
         {start: '', prefix: '', any: 'any'},
       ],
     };
-    const config = {name: 'RemoveBlocks', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
+    const config = {name: 'StripCode', orders: {blocks: ['start', 'end', 'prefix', 'suffix']}};
 
     try {
       sut(schema, options, config);
