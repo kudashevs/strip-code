@@ -4,6 +4,16 @@ Strip Code ![test workflow](https://github.com/kudashevs/strip-code/actions/work
 The `strip-code` is a library that strips marked blocks from any type of code.
 
 
+## Install
+
+```bash
+# NPM
+npm install --save-dev strip-code
+# Yarn
+yarn add --dev strip-code
+```
+
+
 ## Usage
 
 It strips blocks of code marked with two paired tags. A pair of tags consists of a start tag and an end tag. The format
