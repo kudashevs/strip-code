@@ -1,0 +1,1 @@
+console.log('User was created ' + user.name + ' ' + /* dev-start */ user.password + ' ' + /* dev-end */ user.age);
