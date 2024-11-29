@@ -35,8 +35,8 @@ console.log('debug');
 `options.blocks` an array of blocks' representations. Each element of this array describes a unique pair of tags with
 start, end, prefix, and suffix. These values are represented by an object with the properties or by a string:
 ```
-start: 'dev-start'             # a string defines a name of the start tag (unique) - mandatory
-end: 'dev-end',                # a string defines a name of the end tag (unique) - mandatory
+start: 'dev-start'             # a string defines a name for the start tag (unique) - mandatory
+end: 'dev-end',                # a string defines a name for the end tag (unique) - mandatory
 prefix: '/*',                  # a string defines the beginning of a tag (non-empty string) - optional
 suffix: '*/',                  # a string defines the end of a tag (can be an empty string) - optional
 ```
