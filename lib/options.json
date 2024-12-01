@@ -74,6 +74,13 @@
                   "errorMessage": {
                     "type": "blocks.${1#}.suffix should be a string"
                   }
+                },
+                "replacement": {
+                  "type": "string",
+                  "minLength": 0,
+                  "errorMessage": {
+                    "type": "blocks.${1#}.replacement should be a string"
+                  }
                 }
               },
               "errorMessage": {

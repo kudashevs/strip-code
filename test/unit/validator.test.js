@@ -117,6 +117,13 @@ describe('options validator test suite', () => {
       /^blocks.0.prefix should be a string and blocks.0.suffix should be a string/,
     ],
     [
+      'replacement in the first element is wrong',
+      {
+        blocks: [{start: 'any', end: 'any', prefix: 'any', suffix: 'any', replacement: 42}],
+      },
+      /^blocks.0.replacement should be a string/,
+    ],
+    [
       'name in the second element is wrong',
       {
         blocks: [
