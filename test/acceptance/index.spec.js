@@ -77,6 +77,14 @@ describe('specification test', () => {
     expect(sut(input, options)).toStrictEqual(expected);
   });
 
+  it('should replace repeated blocks with the provided options', () => {
+    const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->', replacement: '<!-- block -->'}]};
+    const input = `<!-- dev-start -->console.log('log an operation')<!-- dev-end -->test<!-- dev-start -->console.log('log an operation')<!-- dev-end -->`;
+    const expected = '<!-- block -->test<!-- block -->';
+
+    expect(sut(input, options)).toStrictEqual(expected);
+  });
+
   it('should remove multiple blocks with the provided options', () => {
     const options = {blocks: ['dev', {start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->'}]};
     const input = `<!-- dev-start -->console.log('log an operation')<!-- dev-end -->test<!-- dev-start -->console.log('log an operation')<!-- dev-end -->
@@ -84,6 +92,17 @@ describe('specification test', () => {
     console.log('log an operation');
     /* dev-end */`;
     const expected = 'test\n';
+
+    expect(sut(input, options)).toStrictEqual(expected);
+  });
+
+  it('should replace multiple blocks with the provided options', () => {
+    const options = {blocks: ['dev', {start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->', replacement: '<!-- block -->'}]};
+    const input = `<!-- dev-start -->console.log('log an operation')<!-- dev-end -->test<!-- dev-start -->console.log('log an operation')<!-- dev-end -->
+    /* dev-start */
+    console.log('log an operation');
+    /* dev-end */`;
+    const expected = '<!-- block -->test<!-- block -->\n';
 
     expect(sut(input, options)).toStrictEqual(expected);
   });
