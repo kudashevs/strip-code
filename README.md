@@ -30,16 +30,16 @@ console.log('debug');
 
 ## Options
 
-`options.skips` an array of environments where the processing will be skipped.
+`options.skips` is an array of environments where the processing will be skipped.
 
-`options.blocks` an array of blocks' representations. Each element of this array describes a unique pair of tags with
-start, end, prefix, and suffix. These values are represented by an object with these properties or by a string:
+`options.blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags with
+start, end, prefix, suffix and optional replacement. These values are represented by an object with these properties or by a string:
 ```
-start: 'dev-start'             # a string defines a name for the start tag (unique) - mandatory
-end: 'dev-end',                # a string defines a name for the end tag (unique) - mandatory
-prefix: '/*',                  # a string defines the beginning of a tag (non-empty string) - optional
-suffix: '*/',                  # a string defines the end of a tag (can be an empty string) - optional
-replacement: 'any'             # a string defines a substitution for a removed block - optional
+start: 'dev-start'           # a string defines a name for the start tag (unique) - mandatory
+end: 'dev-end'               # a string defines a name for the end tag (unique) - mandatory
+prefix: '/*'                 # a string defines the beginning of a tag (non-empty string) - optional
+suffix: '*/'                 # a string defines the end of a tag (can be an empty string) - optional
+replacement: 'any'           # a string defines a substitution for a removed block - optional
 ```
 When a pair of tags is represented by a string, this string will be used to generate the names of the start and end tags
 (e.g. `string-start` and `string-end`). If prefix and suffix are not provided, the default values `/*` and `*/` will be used.
