@@ -180,6 +180,37 @@ describe('default test suite', () => {
     expect(output).toStrictEqual(expected);
   });
 
+  it.each([
+    ['.', 'debug.start', 'debug.end', 'visible <!--debug.start--> will be removed <!--debug.end-->', 'visible '],
+    [':', 'debug:start', 'debug:end', 'visible <!--debug:start--> will be removed <!--debug:end-->', 'visible '],
+    ['+', 'debug+start', 'debug+end', 'visible <!--debug+start--> will be removed <!--debug+end-->', 'visible '],
+    ['-', 'debug-start', 'debug-end', 'visible <!--debug-start--> will be removed <!--debug-end-->', 'visible '],
+    ['?', 'debug?start', 'debug?end', 'visible <!--debug?start--> will be removed <!--debug?end-->', 'visible '],
+    ['\\', 'debug\start', 'debug\end', 'visible <!--debug\start--> will be removed <!--debug\end-->', 'visible '],
+    ['/', 'debug/start', 'debug/end', 'visible <!--debug/start--> will be removed <!--debug/end-->', 'visible '],
+    ['^', 'debug^start', 'debug^end', 'visible <!--debug^start--> will be removed <!--debug^end-->', 'visible '],
+    ['$', 'debug$start', 'debug$end', 'visible <!--debug$start--> will be removed <!--debug$end-->', 'visible '],
+    ['*', 'debug*start', 'debug*end', 'visible <!--debug*start--> will be removed <!--debug*end-->', 'visible '],
+    ['=', 'debug=start', 'debug=end', 'visible <!--debug=start--> will be removed <!--debug=end-->', 'visible '],
+    ['?', 'debug?start', 'debug?end', 'visible <!--debug?start--> will be removed <!--debug?end-->', 'visible '],
+    ['!', 'debug!start', 'debug!end', 'visible <!--debug!start--> will be removed <!--debug!end-->', 'visible '],
+  ])('can use %s between start/end and a name', (_, start, end, input, expected) => {
+    const options = {
+      blocks: [
+        {
+          start: start,
+          end: end,
+          prefix: '<!--',
+          suffix: '-->',
+        },
+      ],
+    };
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
+
   it('can remove a block marked in lower case', () => {
     const input = 'visible /* dev-start */ will be removed /* dev-end */';
     const expected = 'visible ';
