@@ -61,6 +61,13 @@ describe('default test suite', () => {
     expect.assertions(1);
   });
 
+  it('can handle an undefined blocks option', () => {
+    const input = 'visible /* dev-start */ will be removed /* dev-end */';
+    const expected = 'visible /* dev-start */ will be removed /* dev-end */';
+
+    expect(sut(input, {})).toStrictEqual(expected);
+  });
+
   it('can handle an empty blocks option', () => {
     const input = 'visible /* dev-start */ will be removed /* dev-end */';
     const expected = 'visible /* dev-start */ will be removed /* dev-end */';
