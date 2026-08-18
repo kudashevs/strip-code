@@ -33,7 +33,7 @@ console.log('debug');
 `options.skips` is an array of environments where the processing will be skipped.
 
 `options.blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags.
-Each pair can be described via a string or an object with different properties (let's call them ways of describing).
+Each pair can be described via a string or an object with different properties (let's call them [ways of describing](#ways)).
 
 An object accepts the following properties:
 ```
@@ -48,7 +48,9 @@ replacement: 'any'          # a string defines a substitution for a removed bloc
 When a pair of tags is represented by a string, this string will be used to generate the values of the start and end tags
 (e.g. `string-start` and `string-end`). If prefix and suffix are not provided, the default values `/*` and `*/` will be used.
 
-<div id="ways"></div> There are different ways of describing a block:
+#### Ways
+
+There are different ways of describing a block:
 - via a string
 ```js
 blocks: ['debug']
@@ -59,16 +61,16 @@ blocks: [
   {
     name: 'debug',
   },
-],
+]
 ```
 - via an object with start/end
 ```js
 blocks: [
   {
-  start: 'debug_start',
-  end: 'debug_end',
+    start: 'debug_start',
+    end: 'debug_end',
   },
-],
+]
 ```
 
 
