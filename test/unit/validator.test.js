@@ -182,7 +182,48 @@ describe('options validator test suite', () => {
       'second element is an object without start and end',
       {
         blocks: [
-          {start: 'any', end: "any", prefix: 'any', suffix: 'any'},
+          {start: 'any', end: 'any', prefix: 'any', suffix: 'any'},
+          {prefix: 'any', suffix: 'any'},
+        ],
+      },
+      /^blocks.1 should be a valid object/,
+    ],
+  ])('fails when options.blocks value of the %s', (_, options, expected) => {
+    try {
+      sut(schema, options);
+    } catch (e) {
+      expect(e.message).toMatch(expected);
+    }
+    expect.assertions(1);
+  });
+
+  it.each([
+    [
+      'first element is an object without name',
+      {
+        blocks: [{prefix: 'any', suffix: 'any'}],
+      },
+      /^blocks.0 should be a valid object/,
+    ],
+    [
+      'first element is an object with empty name',
+      {
+        blocks: [{name: '', prefix: 'any', suffix: 'any'}],
+      },
+      'name should be a non empty string',
+    ],
+    [
+      'first element is an object with empty prefix',
+      {
+        blocks: [{name: 'any', prefix: '', suffix: 'any'}],
+      },
+      'prefix should be a non empty string',
+    ],
+    [
+      'second element is an object without name',
+      {
+        blocks: [
+          {name: 'any', prefix: 'any', suffix: 'any'},
           {prefix: 'any', suffix: 'any'},
         ],
       },
@@ -205,7 +246,9 @@ describe('options validator test suite', () => {
     try {
       sut(schema, options);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end and blocks.0.prefix.+and.+start/);
+      expect(e.message).toMatch(
+        /^blocks.0 should be a valid object with start, end and blocks.0 should be a valid object with name and blocks.0 should contain either.+start/,
+      );
     }
     expect.assertions(1);
   });
@@ -236,7 +279,9 @@ describe('options validator test suite', () => {
     try {
       sut(schema, options, config);
     } catch (e) {
-      expect(e.message).toMatch(/^blocks.0 should be a valid object with start, end and blocks.0.start.+and.+prefix.+and.+blocks.1/);
+      expect(e.message).toMatch(
+        /^blocks.0 should be a valid object with start, end and blocks.0 should be a valid object with name and blocks.0 should contain either.+and.+prefix.+and.+blocks.1/,
+      );
     }
     expect.assertions(1);
   });

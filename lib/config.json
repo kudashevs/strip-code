@@ -1,5 +1,5 @@
 {
   "orders": {
-    "blocks": ["start", "end", "prefix", "suffix"]
+    "blocks": ["name", "separator", "start", "end", "prefix", "suffix"]
   }
 }

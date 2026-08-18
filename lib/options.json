@@ -42,7 +42,6 @@
             },
             "then": {
               "type": "object",
-              "required": ["start", "end"],
               "properties": {
                 "start": {
                   "type": "string",
@@ -58,6 +57,22 @@
                   "errorMessage": {
                     "type": "blocks.${1#}.end should be a string",
                     "minLength": "blocks.${1#}.end should be a non empty string"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": {
+                    "type": "blocks.${1#}.name should be a string",
+                    "minLength": "blocks.${1#}.name should be a non empty string"
+                  }
+                },
+                "separator": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": {
+                    "type": "blocks.${1#}.separator should be a string",
+                    "minLength": "blocks.${1#}.separator should be a non empty string"
                   }
                 },
                 "prefix": {
@@ -83,9 +98,23 @@
                   }
                 }
               },
+              "oneOf": [
+                {
+                  "required": ["start", "end"],
+                  "errorMessage": {
+                    "required": "blocks.${0#} should be a valid object with start, end"
+                  }
+                },
+                {
+                  "required": ["name"],
+                  "errorMessage": {
+                    "required": "blocks.${0#} should be a valid object with name"
+                  }
+                }
+              ],
               "errorMessage": {
                 "type": "blocks.${0#} should be an object",
-                "required": "blocks.${0#} should be a valid object with start, end"
+                "oneOf": "blocks.${0#} should contain either start/end or name"
               }
             }
           }
