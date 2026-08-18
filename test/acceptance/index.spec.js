@@ -39,6 +39,44 @@ describe('specification test', () => {
     expect.assertions(1);
   });
 
+  it('should validate and fail when both ways of describing a block object are used', () => {
+    const options = {
+      blocks: [
+        {
+          name: 'debug',
+          separator: '_',
+          start: 'any',
+          end: 'any',
+        },
+      ],
+    };
+
+    try {
+      sut(schema, options);
+    } catch (e) {
+      expect(e.message).toStrictEqual('blocks.0 should contain either start/end or name');
+    }
+    expect.assertions(1);
+  });
+
+  it('should validate and fial when start and end are equal in the provided options', () => {
+    const options = {
+      blocks: [
+        {
+          start: 'debug',
+          end: 'debug',
+        },
+      ],
+    };
+
+    try {
+      sut(schema, options);
+    } catch (e) {
+      expect(e.message).toStrictEqual('The start and end properties should now be equal');
+    }
+    expect.assertions(1);
+  });
+
   it('should remove a multi-line block marked with the provided options', () => {
     const options = {blocks: [{start: 'dev-start', end: 'dev-end', prefix: '<!--', suffix: '-->'}]};
     const input = `test

@@ -90,7 +90,42 @@ describe('default test suite', () => {
     expect(output).toStrictEqual(expected);
   });
 
-  it('can remove a block generated from an object parameter', () => {
+  it('cannot accept equal start and end in an object with start/end', () => {
+    const options = {
+      blocks: [
+        {
+          start: 'equal',
+          end: 'equal',
+        },
+      ],
+    };
+
+    try {
+      sut(schema, options);
+    } catch (e) {
+      expect(e.message).toStrictEqual('The start and end properties should now be equal');
+    }
+    expect.assertions(1);
+  });
+
+  it('can remove a block generated from an object with name', () => {
+    const options = {
+      blocks: [
+        {
+          name: 'debug',
+          separator: '_',
+        },
+      ],
+    };
+    const input = 'visible /* debug_start */ will be removed /* debug_end */';
+    const expected = 'visible ';
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
+
+  it('can remove a block generated from an object with start/end', () => {
     const options = {
       blocks: [
         {
