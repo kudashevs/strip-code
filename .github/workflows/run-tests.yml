@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Override TypeScript (v${{ matrix.ts-version }})
-        run: npm install typescript@^${{ matrix.ts-version }} --save-dev
+        run: npm install typescript@^${{ matrix.ts-version }} --no-save
 
       - name: Run tests
         if: matrix.os == 'windows-latest'
@@ -47,4 +47,4 @@ jobs:
 
       - name: Run tests
         if: matrix.os != 'windows-latest'
-        run: export NODE_OPTIONS=--openssl-legacy-provider && npm test
+        run: npm test
