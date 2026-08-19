@@ -115,7 +115,7 @@ describe('default test suite', () => {
     expect.assertions(1);
   });
 
-  it('can remove a block generated from an object with name', () => {
+  it('can remove a block generated from an object with a name', () => {
     const options = {
       blocks: [
         {
@@ -125,6 +125,22 @@ describe('default test suite', () => {
       ],
     };
     const input = 'visible /* debug_start */ will be removed /* debug_end */';
+    const expected = 'visible ';
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
+
+  it('can ignore a separator when a block generated from an object with start/end', () => {
+    const options = {
+      blocks: [{
+        start: 'debug-start',
+        end: 'debug-end',
+        separator: '_',
+      }],
+    };
+    const input = 'visible /* debug-start */ will be removed /* debug-end */';
     const expected = 'visible ';
 
     const output = sut(input, options);
