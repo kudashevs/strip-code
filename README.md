@@ -30,36 +30,36 @@ console.log('debug');
 
 ## Options
 
-`options.skips` is an array of environments where the processing will be skipped.
+`options.skips` is an array of environment names where the processing will be skipped.
 
 `options.blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags.
-Each pair can be described via a string or an object with different properties (let's call them [ways of describing](#ways)).
+Pairs can be defined as a string or an object with different properties (let's call them [ways of defining pairs](#ways)).
 
 An object accepts the following properties:
 ```
-name: 'name'                # a string defines a name for a pair of tags - mandatory
-separator: '-'              # a string defines a sepearator between a name and a position - optional
-start: 'dev-start'          # a string defines a name for the start tag (unique) - mandatory
-end: 'dev-end'              # a string defines a name for the end tag (unique) - mandatory
-prefix: '/*'                # a string defines the beginning of a tag (non-empty string) - optional
-suffix: '*/'                # a string defines the end of a tag (can be an empty string) - optional
-replacement: 'any'          # a string defines a substitution for a removed block - optional
+name: 'name'            # string defines a name for a pair of tags - required in an object with a name
+separator: '-'          # string defines a separator between a name and a position - optional in an object with a name
+start: 'dev-start'      # string defines a name for the start tag (unique) - required in an object with start/end
+end: 'dev-end'          # string defines a name for the end tag (unique) - required in an object with start/end
+prefix: '/*'            # string defines the beginning of a tag (non-empty string) - optional
+suffix: '*/'            # string defines the end of a tag (can be an empty string) - optional
+replacement: 'any'      # string defines a substitution for a removed block - optional
 ```
-When a pair of tags is represented by a string, this string will be used to generate the values of the start and end tags
-(e.g. `string-start` and `string-end`). If prefix and suffix are not provided, the default values `/*` and `*/` will be used.
+When a pair of tags is defined by a string, this string will be used to generate the values of the start and end tags
+(e.g. `string-start` and `string-end`). If prefix and suffix are not provided, the default values `/*` and `*/` are used.
 
 #### Ways
 
-There are different ways of describing a block:
+There are different ways of defining a block:
 - via a string
 ```js
-blocks: ['debug']
+blocks: ['debug'] // equal to start: 'debug-start', end: 'debug-end'
 ```
-- via an object with name
+- via an object with a name
 ```js
 blocks: [
   {
-    name: 'debug',
+    name: 'debug', // equal to start: 'debug-start', end: 'debug-end'
   },
 ]
 ```
