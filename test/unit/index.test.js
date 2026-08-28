@@ -30,14 +30,26 @@ describe('default test suite', () => {
     process.env.NODE_ENV = originalMode;
   });
 
-  it('can skip in test environment when an option provided', () => {
-    process.env.NODE_ENV = 'test';
+  it('does not skip in production environment by default', () => {
+    process.env.NODE_ENV = 'production';
+
+    const input = '/* dev-start */ visible /* dev-end */';
+    const expected = '';
+
+    expect(process.env.NODE_ENV).toStrictEqual('production');
+    expect(sut(input, defaultOptions)).toStrictEqual(expected);
+
+    process.env.NODE_ENV = originalMode;
+  });
+
+  it('can skip development environment when an option provided', () => {
+    process.env.NODE_ENV = 'production';
 
     const input = '/* dev-start */ visible /* dev-end */';
     const expected = '/* dev-start */ visible /* dev-end */';
 
-    expect(process.env.NODE_ENV).toStrictEqual('test');
-    expect(sut(input, {skips: ['test']})).toStrictEqual(expected);
+    expect(process.env.NODE_ENV).toStrictEqual('production');
+    expect(sut(input, {skips: ['production']})).toStrictEqual(expected);
 
     process.env.NODE_ENV = originalMode;
   });
