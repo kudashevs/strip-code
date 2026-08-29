@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.1.0](https://github.com/kudashevs/strip-code/compare/v1.1.0...v2.0.0) - 2026-08-18
+## [2.1.0](https://github.com/kudashevs/strip-code/compare/v2.0.0...v2.1.0) - 2026-08-18
 
 - Add a named way of describing options
 - Update README.md
