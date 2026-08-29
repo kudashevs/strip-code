@@ -146,11 +146,13 @@ describe('default test suite', () => {
 
   it('can ignore a separator when a block generated from an object with start/end', () => {
     const options = {
-      blocks: [{
-        start: 'debug-start',
-        end: 'debug-end',
-        separator: '_',
-      }],
+      blocks: [
+        {
+          start: 'debug-start',
+          end: 'debug-end',
+          separator: '_',
+        },
+      ],
     };
     const input = 'visible /* debug-start */ will be removed /* debug-end */';
     const expected = 'visible ';
