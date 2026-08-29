@@ -1,6 +1,6 @@
 {
   "name": "strip-code",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A library that strips marked blocks of code from any type of code.",
   "license": "MIT",
   "type": "module",

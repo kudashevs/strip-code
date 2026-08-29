@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1](https://github.com/kudashevs/strip-code/compare/v2.1.0...v2.1.1) - 2026-08-29
+
+- Fix handling of CRLF
+- Some improvements
+
 ## [2.1.0](https://github.com/kudashevs/strip-code/compare/v2.0.0...v2.1.0) - 2026-08-18
 
 - Add a named way of describing options
