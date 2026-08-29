@@ -317,4 +317,26 @@ describe('default test suite', () => {
 
     expect(output).toStrictEqual(expected);
   });
+
+  it('can handle Unix eol', () => {
+    const options = {blocks: ['debug']};
+
+    const input = 'visible\n/* debug-start */ will be removed /* debug-end */\ntest';
+    const expected = 'visible\ntest';
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
+
+  it('can handle Windows eol', () => {
+    const options = {blocks: ['debug']};
+
+    const input = 'visible\r\n/* debug-start */ will be removed /* debug-end */\r\ntest';
+    const expected = 'visible\r\ntest';
+
+    const output = sut(input, options);
+
+    expect(output).toStrictEqual(expected);
+  });
 });
